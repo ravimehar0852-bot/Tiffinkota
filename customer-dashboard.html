@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Dashboard – TiffinKota</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background: #F7F3EF; font-family: var(--font-body); }
+
+    /* ── TOP NAV ── */
+    .customer-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .customer-nav .nav__logo { margin-right: auto; }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .nav-user-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-lt));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: .9rem;
+    }
+    .nav-user-name { font-size: .88rem; font-weight: 600; color: var(--dark); }
+
+    /* ── LAYOUT ── */
+    .customer-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+    }
+
+    /* ── LEFT PANEL ── */
+    .left-panel {}
+    .profile-card {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dk));
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      text-align: center;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .profile-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      border: 3px solid rgba(255,255,255,.5);
+    }
+    .profile-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .profile-email { font-size: .8rem; opacity: .75; margin-bottom: 16px; }
+    .profile-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .p-stat {
+      background: rgba(255,255,255,.15);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+    }
+    .p-stat-val { font-size: 1.2rem; font-weight: 700; }
+    .p-stat-label { font-size: .72rem; opacity: .75; }
+
+    .side-menu {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .side-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--mid);
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .side-menu-item:last-child { border-bottom: none; }
+    .side-menu-item:hover { background: var(--warm); color: var(--orange); }
+    .side-menu-item.active { background: #FFF3EC; color: var(--orange); font-weight: 700; border-left: 3px solid var(--orange); }
+    .side-menu-item .m-icon { font-size: 1.1rem; width: 20px; }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel {}
+
+    /* ACTIVE SUBSCRIPTION */
+    .subscription-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .sub-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .sub-title { font-size: 1rem; font-weight: 700; color: var(--dark); }
+    .sub-badge {
+      background: #E8F8F5; color: #27AE60;
+      font-size: .75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .sub-plan-card {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: linear-gradient(135deg, #FFF8F2, #FFE4CC);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,107,44,.15);
+      margin-bottom: 16px;
+    }
+    .sub-plan-emoji { font-size: 2.5rem; }
+    .sub-plan-info { flex: 1; }
+    .sub-plan-name { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .sub-plan-kitchen { font-size: .82rem; color: var(--muted); margin-bottom: 8px; }
+    .sub-plan-meta { display: flex; gap: 16px; }
+    .sub-plan-tag { font-size: .78rem; font-weight: 600; color: var(--orange); background: rgba(255,107,44,.1); padding: 3px 10px; border-radius: 50px; }
+    .sub-progress { margin-top: 16px; }
+    .sub-progress-label { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
+    .progress-bar { width: 100%; height: 8px; background: var(--warm); border-radius: 50px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange-lt)); border-radius: 50px; }
+    .sub-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+    /* TODAY'S DELIVERY */
+    .delivery-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .delivery-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .delivery-title { font-size: 1rem; font-weight: 700; color: var(--dark); }
+    .live-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: #E8F8F5; color: #27AE60;
+      font-size: .75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #27AE60; animation: blink2 1.2s ease infinite; }
+    @keyframes blink2 { 0%,100%{opacity:1}50%{opacity:.3} }
+    .tracker-steps {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .t-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .t-step-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--warm);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      transition: all .3s;
+    }
+    .t-step-circle.done { background: var(--orange); border-color: var(--orange); }
+    .t-step-circle.active { background: var(--white); border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,107,44,.15); animation: pulse2 1.5s ease infinite; }
+    @keyframes pulse2 { 0%,100%{box-shadow:0 0 0 4px rgba(255,107,44,.15)}50%{box-shadow:0 0 0 8px rgba(255,107,44,.05)} }
+    .t-step-label { font-size: .7rem; color: var(--muted); font-weight: 500; text-align: center; }
+    .t-step.done .t-step-label { color: var(--orange); font-weight: 700; }
+    .t-line { flex: 1; height: 2px; background: var(--border); margin-bottom: 20px; }
+    .t-line.done { background: var(--orange); }
+    .delivery-eta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+    }
+    .eta-icon { font-size: 1.5rem; }
+    .eta-text {}
+    .eta-label { font-size: .78rem; color: var(--muted); }
+    .eta-val { font-size: 1rem; font-weight: 700; color: var(--dark); }
+
+    /* RECENT ORDERS */
+    .orders-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .orders-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .order-history-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    .order-history-item:last-child { border-bottom: none; }
+    .order-history-emoji {
+      width: 44px; height: 44px;
+      background: var(--warm);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .order-history-info { flex: 1; }
+    .order-history-name { font-size: .9rem; font-weight: 600; color: var(--dark); }
+    .order-history-meta { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+    .order-history-price { font-size: .9rem; font-weight: 700; color: var(--dark); }
+    .order-history-rating { display: flex; gap: 2px; margin-top: 4px; cursor: pointer; }
+    .star { font-size: .9rem; color: #DDD; transition: color .2s; }
+    .star.lit { color: #F4C430; }
+    .star:hover { color: #F4C430; }
+
+    /* ── BOTTOM NAV (MOBILE) ── */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      z-index: 200;
+      padding: 8px 0 env(safe-area-inset-bottom, 8px);
+    }
+    .bottom-nav-inner { display: flex; justify-content: space-around; }
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 12px;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .bottom-nav-icon { font-size: 1.3rem; }
+    .bottom-nav-label { font-size: .65rem; color: var(--muted); font-weight: 600; }
+    .bottom-nav-item.active .bottom-nav-label { color: var(--orange); }
+    .bottom-nav-item.active .bottom-nav-icon { animation: popIn .2s ease; }
+    @keyframes popIn { 0%{transform:scale(.8)}100%{transform:scale(1)} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .customer-layout { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .bottom-nav { display: block; }
+      body { padding-bottom: 70px; }
+    }
+    @media (max-width: 480px) {
+      .customer-layout { padding: 16px; }
+      .tracker-steps { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="customer-nav">
+  <a href="index.html" class="nav__logo">
+    <span class="logo-icon">🍱</span>
+    <span>Tiffin<strong>Kota</strong></span>
+  </a>
+  <button class="btn btn--ghost" style="font-size:.82rem" onclick="showT('🔔 No new notifications')">🔔</button>
+  <div class="nav-user" onclick="showT('Profile clicked!')">
+    <div class="nav-user-avatar">R</div>
+    <div class="nav-user-name">Rahul Kumar</div>
+  </div>
+</nav>
+
+<div class="customer-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="profile-card">
+      <div class="profile-avatar">R</div>
+      <div class="profile-name">Rahul Kumar</div>
+      <div class="profile-email">rahul.kumar@email.com</div>
+      <div class="profile-stats">
+        <div class="p-stat">
+          <div class="p-stat-val">3</div>
+          <div class="p-stat-label">Active Plans</div>
+        </div>
+        <div class="p-stat">
+          <div class="p-stat-val">87</div>
+          <div class="p-stat-label">Meals Had</div>
+        </div>
+        <div class="p-stat">
+          <div class="p-stat-val">₹240</div>
+          <div class="p-stat-label">Wallet</div>
+        </div>
+        <div class="p-stat">
+          <div class="p-stat-val">4.8</div>
+          <div class="p-stat-label">Avg Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-menu">
+      <div class="side-menu-item active"><span class="m-icon">🏠</span> Dashboard</div>
+      <div class="side-menu-item" onclick="showT('My Orders →')"><span class="m-icon">📦</span> My Orders</div>
+      <div class="side-menu-item" onclick="showT('Subscriptions →')"><span class="m-icon">🔄</span> Subscriptions</div>
+      <div class="side-menu-item" onclick="showT('Favourites →')"><span class="m-icon">❤️</span> Favourites</div>
+      <div class="side-menu-item" onclick="showT('Addresses →')"><span class="m-icon">📍</span> Saved Addresses</div>
+      <div class="side-menu-item" onclick="showT('Wallet: ₹240')"><span class="m-icon">👛</span> Wallet · ₹240</div>
+      <div class="side-menu-item" onclick="showT('Referral Code: RAHUL50')"><span class="m-icon">🎁</span> Refer & Earn</div>
+      <div class="side-menu-item" onclick="showT('Help opened!')"><span class="m-icon">💬</span> Help & Support</div>
+      <div class="side-menu-item" onclick="window.location.href='index.html'"><span class="m-icon">🚪</span> Logout</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- Active Subscription -->
+    <div class="subscription-card">
+      <div class="sub-header">
+        <div class="sub-title">📅 Active Subscription</div>
+        <span class="sub-badge">✅ Active</span>
+      </div>
+      <div class="sub-plan-card">
+        <div class="sub-plan-emoji">🍱</div>
+        <div class="sub-plan-info">
+          <div class="sub-plan-name">Full Day Plan – Sharma Ji Ki Rasoi</div>
+          <div class="sub-plan-kitchen">📍 Talwandi, Kota &nbsp;·&nbsp; ⭐ 4.9 Rating</div>
+          <div class="sub-plan-meta">
+            <span class="sub-plan-tag">Breakfast + Lunch + Dinner</span>
+            <span class="sub-plan-tag">Veg</span>
+          </div>
+        </div>
+      </div>
+      <div class="sub-progress">
+        <div class="sub-progress-label">
+          <span>Deliveries completed this month</span>
+          <span>18 / 26</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:69%"></div></div>
+      </div>
+      <div class="sub-actions">
+        <button class="btn btn--ghost" style="font-size:.82rem" onclick="showT('Subscription paused for 2 days')">⏸ Pause</button>
+        <button class="btn btn--ghost" style="font-size:.82rem" onclick="showT('Plan changed!')">🔄 Change Plan</button>
+        <button class="btn btn--primary" style="font-size:.82rem" onclick="showT('Renewing subscription...')">Renew ₹2,799</button>
+      </div>
+    </div>
+
+    <!-- Today's Delivery Tracker -->
+    <div class="delivery-card">
+      <div class="delivery-header">
+        <div class="delivery-title">🚴 Today's Delivery – Lunch</div>
+        <div class="live-badge"><div class="live-dot"></div> Live Tracking</div>
+      </div>
+      <div class="tracker-steps">
+        <div class="t-step done">
+          <div class="t-step-circle done">✓</div>
+          <div class="t-step-label">Order<br/>Confirmed</div>
+        </div>
+        <div class="t-line done"></div>
+        <div class="t-step done">
+          <div class="t-step-circle done">✓</div>
+          <div class="t-step-label">Being<br/>Prepared</div>
+        </div>
+        <div class="t-line done"></div>
+        <div class="t-step active">
+          <div class="t-step-circle active">🚴</div>
+          <div class="t-step-label">Out for<br/>Delivery</div>
+        </div>
+        <div class="t-line"></div>
+        <div class="t-step">
+          <div class="t-step-circle">🏠</div>
+          <div class="t-step-label">Delivered</div>
+        </div>
+      </div>
+      <div class="delivery-eta">
+        <span class="eta-icon">⏱</span>
+        <div class="eta-text">
+          <div class="eta-label">Estimated arrival</div>
+          <div class="eta-val">12:45 PM – 8 minutes away!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Orders / History -->
+    <div class="orders-card">
+      <div class="orders-card-header">
+        <div style="font-size:1rem;font-weight:700;color:var(--dark)">📋 Recent Orders</div>
+        <div style="font-size:.8rem;color:var(--orange);cursor:pointer;font-weight:600" onclick="showT('Full history →')">View All →</div>
+      </div>
+      <div id="orderHistory"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active" onclick="bottomNav(this)">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Home</span>
+    </button>
+    <button class="bottom-nav-item" onclick="bottomNav(this)">
+      <span class="bottom-nav-icon">📦</span>
+      <span class="bottom-nav-label">Orders</span>
+    </button>
+    <button class="bottom-nav-item" onclick="bottomNav(this)">
+      <span class="bottom-nav-icon">🔍</span>
+      <span class="bottom-nav-label">Browse</span>
+    </button>
+    <button class="bottom-nav-item" onclick="bottomNav(this)">
+      <span class="bottom-nav-icon">❤️</span>
+      <span class="bottom-nav-label">Saved</span>
+    </button>
+    <button class="bottom-nav-item" onclick="bottomNav(this)">
+      <span class="bottom-nav-icon">👤</span>
+      <span class="bottom-nav-label">Profile</span>
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="cToast"></div>
+
+<script>
+  const history_orders = [
+    { emoji:"🍛", name:"Lunch – Sharma Ji Ki Rasoi", meta:"Today · Full Day Plan", price:"₹93/day", stars:5 },
+    { emoji:"🥘", name:"Dinner – Sharma Ji Ki Rasoi", meta:"Yesterday · Full Day Plan", price:"₹93/day", stars:5 },
+    { emoji:"🍱", name:"Lunch – Sharma Ji Ki Rasoi", meta:"15 May · Full Day Plan", price:"₹93/day", stars:4 },
+    { emoji:"🫕", name:"Lunch – Sharma Ji Ki Rasoi", meta:"14 May · Full Day Plan", price:"₹93/day", stars:5 },
+  ];
+
+  document.getElementById("orderHistory").innerHTML = history_orders.map((o, i) => `
+    <div class="order-history-item">
+      <div class="order-history-emoji">${o.emoji}</div>
+      <div class="order-history-info">
+        <div class="order-history-name">${o.name}</div>
+        <div class="order-history-meta">${o.meta}</div>
+        <div class="order-history-rating" id="rating-${i}">
+          ${[1,2,3,4,5].map(s => `<span class="star ${s<=o.stars?'lit':''}" onclick="rateOrder(${i},${s})">★</span>`).join("")}
+        </div>
+      </div>
+      <div class="order-history-price">${o.price}</div>
+    </div>
+  `).join("");
+
+  function rateOrder(orderId, stars) {
+    const container = document.getElementById(`rating-${orderId}`);
+    container.querySelectorAll(".star").forEach((s, i) => {
+      s.classList.toggle("lit", i < stars);
+    });
+    showT(`⭐ Rated ${stars} stars – thank you!`);
+  }
+
+  function bottomNav(el) {
+    document.querySelectorAll(".bottom-nav-item").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+  }
+
+  let toastTimer2;
+  function showT(msg) {
+    const t = document.getElementById("cToast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer2);
+    toastTimer2 = setTimeout(() => t.classList.remove("show"), 2800);
+  }
+</script>
+</body>
+</html>

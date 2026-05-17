@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TiffinKota – Premium Tiffin Delivery in Kota. Fresh, homemade meals delivered daily." />
+  <title>TiffinKota – Fresh Tiffin Delivered Daily</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="mainNav">
+  <div class="nav__inner">
+    <a href="#" class="nav__logo">
+      <span class="logo-icon">🍱</span>
+      <span>Tiffin<strong>Kota</strong></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#home" class="nav__link">Home</a></li>
+      <li><a href="#providers" class="nav__link">Providers</a></li>
+      <li><a href="#plans" class="nav__link">Plans</a></li>
+      <li><a href="#about" class="nav__link">About</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button class="btn btn--ghost" onclick="openModal('loginModal')">Login</button>
+      <button class="btn btn--primary" onclick="openModal('signupModal')">Get Started</button>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero__bg">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="grid-lines"></div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__badge animate-in" style="--delay:0s">🏠 Kota's #1 Tiffin Platform</div>
+    <h1 class="hero__title animate-in" style="--delay:.1s">
+      Ghar Jaisa Khana,<br /><span class="highlight">Roz Door Tak</span>
+    </h1>
+    <p class="hero__sub animate-in" style="--delay:.2s">
+      Subscribe to daily tiffin from verified home kitchens in Kota. Fresh, nutritious, affordable – delivered before you're hungry.
+    </p>
+    <div class="hero__cta animate-in" style="--delay:.3s">
+      <button class="btn btn--primary btn--lg" onclick="openModal('signupModal')">Order Tiffin Now</button>
+      <button class="btn btn--outline btn--lg" onclick="openModal('ownerModal')">Register Your Kitchen</button>
+    </div>
+    <div class="hero__stats animate-in" style="--delay:.4s">
+      <div class="stat"><strong>2,400+</strong><span>Happy Customers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><strong>180+</strong><span>Tiffin Providers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><strong>₹49</strong><span>Starting Price</span></div>
+    </div>
+  </div>
+  <div class="hero__visual animate-in" style="--delay:.2s">
+    <div class="tiffin-box">
+      <div class="tiffin-box__lid"></div>
+      <div class="tiffin-box__body">
+        <div class="food-item food-item--1">🍛</div>
+        <div class="food-item food-item--2">🥗</div>
+        <div class="food-item food-item--3">🍞</div>
+        <div class="food-item food-item--4">🍚</div>
+      </div>
+      <div class="floating-badge fb--1">⭐ 4.9</div>
+      <div class="floating-badge fb--2">🚴 30 min</div>
+      <div class="floating-badge fb--3">✅ Veg</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST STRIP ===== -->
+<div class="trust-strip">
+  <div class="trust-strip__inner">
+    <div class="trust-item"><span>🏆</span> Kota's Best Rated</div>
+    <div class="trust-sep">◆</div>
+    <div class="trust-item"><span>🔒</span> Secure Payments</div>
+    <div class="trust-sep">◆</div>
+    <div class="trust-item"><span>🌿</span> Fresh Daily</div>
+    <div class="trust-sep">◆</div>
+    <div class="trust-item"><span>📦</span> Monthly Plans</div>
+    <div class="trust-sep">◆</div>
+    <div class="trust-item"><span>⚡</span> Live Tracking</div>
+  </div>
+</div>
+
+<!-- ===== SEARCH BAR ===== -->
+<section class="search-section">
+  <div class="container">
+    <div class="search-bar">
+      <div class="search-bar__field">
+        <span class="search-icon">📍</span>
+        <input type="text" placeholder="Enter your area in Kota..." id="locationInput" />
+      </div>
+      <div class="search-bar__filter">
+        <select id="mealType">
+          <option value="">All Meals</option>
+          <option>Breakfast</option>
+          <option>Lunch</option>
+          <option>Dinner</option>
+        </select>
+      </div>
+      <div class="search-bar__filter">
+        <select id="vegFilter">
+          <option value="">Veg & Non-Veg</option>
+          <option>Veg Only</option>
+          <option>Non-Veg</option>
+        </select>
+      </div>
+      <button class="btn btn--primary search-bar__btn" onclick="triggerSearch()">Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROVIDERS ===== -->
+<section class="section" id="providers">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-badge">🍽️ Top Kitchens</div>
+      <h2 class="section-title">Popular Tiffin Providers</h2>
+      <p class="section-sub">Handpicked, verified home kitchens trusted by thousands of students & working professionals</p>
+    </div>
+    <div class="filter-tabs" id="filterTabs">
+      <button class="tab active" data-filter="all">All</button>
+      <button class="tab" data-filter="veg">🥦 Veg</button>
+      <button class="tab" data-filter="nonveg">🍗 Non-Veg</button>
+      <button class="tab" data-filter="budget">💰 Budget</button>
+      <button class="tab" data-filter="premium">⭐ Premium</button>
+    </div>
+    <div class="cards-grid" id="providersGrid">
+      <!-- Injected by JS -->
+    </div>
+    <div class="section-more">
+      <button class="btn btn--ghost" onclick="loadMore()">View All Providers →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLANS ===== -->
+<section class="plans-section" id="plans">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-badge">📅 Subscription</div>
+      <h2 class="section-title">Choose Your Plan</h2>
+      <p class="section-sub">Flexible monthly plans. No lock-ins. Cancel anytime.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card plan-card--basic">
+        <div class="plan-tag">Most Popular</div>
+        <div class="plan-icon">🌅</div>
+        <h3>Lunch Plan</h3>
+        <div class="plan-price">₹<span>1,299</span>/mo</div>
+        <p class="plan-desc">Perfect for students & office-goers who need a hearty afternoon meal.</p>
+        <ul class="plan-features">
+          <li>✅ 1 meal/day (Lunch)</li>
+          <li>✅ 26 deliveries/month</li>
+          <li>✅ Choice of 3 kitchens</li>
+          <li>✅ Live tracking</li>
+          <li>❌ Breakfast/Dinner</li>
+        </ul>
+        <button class="btn btn--primary btn--full" onclick="openModal('signupModal')">Subscribe Now</button>
+      </div>
+      <div class="plan-card plan-card--popular">
+        <div class="plan-tag plan-tag--hot">🔥 Best Value</div>
+        <div class="plan-icon">☀️</div>
+        <h3>Full Day Plan</h3>
+        <div class="plan-price">₹<span>2,799</span>/mo</div>
+        <p class="plan-desc">3 meals a day, every day. The complete home-food experience.</p>
+        <ul class="plan-features">
+          <li>✅ Breakfast + Lunch + Dinner</li>
+          <li>✅ 26 deliveries/month</li>
+          <li>✅ Choice of 5 kitchens</li>
+          <li>✅ Live tracking</li>
+          <li>✅ Priority support</li>
+        </ul>
+        <button class="btn btn--white btn--full" onclick="openModal('signupModal')">Subscribe Now</button>
+      </div>
+      <div class="plan-card plan-card--basic">
+        <div class="plan-icon">🌙</div>
+        <h3>Dinner Plan</h3>
+        <div class="plan-price">₹<span>999</span>/mo</div>
+        <p class="plan-desc">Light, fresh dinner delivered every evening to your doorstep.</p>
+        <ul class="plan-features">
+          <li>✅ 1 meal/day (Dinner)</li>
+          <li>✅ 26 deliveries/month</li>
+          <li>✅ Choice of 2 kitchens</li>
+          <li>✅ Live tracking</li>
+          <li>❌ Lunch/Breakfast</li>
+        </ul>
+        <button class="btn btn--primary btn--full" onclick="openModal('signupModal')">Subscribe Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section how-section" id="about">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-badge">📖 How It Works</div>
+      <h2 class="section-title">Simple. Fast. Delicious.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📍</div>
+        <h3>Pick Your Location</h3>
+        <p>Enter your address in Kota. We'll show you all verified tiffin services near you.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🍱</div>
+        <h3>Choose a Provider</h3>
+        <p>Browse menus, check ratings, compare prices and select your favourite kitchen.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">💳</div>
+        <h3>Subscribe & Pay</h3>
+        <p>Pick a plan, pay securely via UPI, card or cash. Your subscription is activated instantly.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚴</div>
+        <h3>Enjoy Delivery</h3>
+        <p>Fresh tiffin delivered to your door every day. Track your order in real-time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-badge">💬 Testimonials</div>
+      <h2 class="section-title">What Kota Says</h2>
+    </div>
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section class="cta-section">
+  <div class="cta-section__bg">
+    <div class="orb orb--cta1"></div>
+    <div class="orb orb--cta2"></div>
+  </div>
+  <div class="container cta-inner">
+    <div class="cta-text">
+      <h2>Own a Kitchen in Kota?</h2>
+      <p>Register your tiffin service for free and start earning. Join 180+ providers already on TiffinKota.</p>
+    </div>
+    <div class="cta-actions">
+      <button class="btn btn--white btn--lg" onclick="openModal('ownerModal')">Register Your Kitchen →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section faq-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-badge">❓ FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <div class="nav__logo">
+        <span class="logo-icon">🍱</span>
+        <span>Tiffin<strong>Kota</strong></span>
+      </div>
+      <p>Kota's most trusted tiffin delivery platform. Fresh meals from verified home kitchens, every single day.</p>
+      <div class="footer__social">
+        <a href="#" class="social-btn">📘</a>
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">💬</a>
+        <a href="#" class="social-btn">🐦</a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Platform</h4>
+      <a href="#">For Customers</a>
+      <a href="#">For Providers</a>
+      <a href="#">Pricing</a>
+      <a href="#">How It Works</a>
+    </div>
+    <div class="footer__col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+    </div>
+    <div class="footer__col">
+      <h4>Support</h4>
+      <a href="#">Help Center</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© 2025 TiffinKota. Made with ❤️ in Kota, Rajasthan.</p>
+    <p>All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ===== MODALS ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('loginModal')">✕</button>
+    <div class="modal__logo"><span class="logo-icon">🍱</span> TiffinKota</div>
+    <h2 class="modal__title">Welcome Back!</h2>
+    <p class="modal__sub">Login to your account</p>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchLoginType('customer', this)">Customer</button>
+      <button class="modal-tab" onclick="switchLoginType('owner', this)">Owner</button>
+    </div>
+    <form class="modal__form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>Email / Phone</label>
+        <input type="text" placeholder="Enter email or phone number" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" required />
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Login</button>
+    </form>
+    <div class="modal__divider"><span>OR</span></div>
+    <button class="btn btn--google btn--full">🔍 Continue with Google</button>
+    <p class="modal__footer">Don't have an account? <a href="#" onclick="switchModal('loginModal','signupModal')">Sign Up</a></p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="signupModal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('signupModal')">✕</button>
+    <div class="modal__logo"><span class="logo-icon">🍱</span> TiffinKota</div>
+    <h2 class="modal__title">Create Account</h2>
+    <p class="modal__sub">Start your tiffin journey today</p>
+    <form class="modal__form" onsubmit="handleSignup(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 XXXXXXXXXX" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a strong password" required />
+      </div>
+      <div class="form-group">
+        <label>Area in Kota</label>
+        <select>
+          <option>Select your area</option>
+          <option>Talwandi</option>
+          <option>Vigyan Nagar</option>
+          <option>Mahaveer Nagar</option>
+          <option>Dadabari</option>
+          <option>Rangbari</option>
+          <option>Kota City</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Create Account</button>
+    </form>
+    <div class="modal__divider"><span>OR</span></div>
+    <button class="btn btn--google btn--full">🔍 Continue with Google</button>
+    <p class="modal__footer">Already have an account? <a href="#" onclick="switchModal('signupModal','loginModal')">Login</a></p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="ownerModal">
+  <div class="modal modal--wide">
+    <button class="modal__close" onclick="closeModal('ownerModal')">✕</button>
+    <div class="modal__logo"><span class="logo-icon">🍱</span> TiffinKota</div>
+    <h2 class="modal__title">Register Your Kitchen</h2>
+    <p class="modal__sub">Join 180+ providers and grow your tiffin business</p>
+    <form class="modal__form" onsubmit="handleOwnerSignup(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kitchen Name</label>
+          <input type="text" placeholder="Eg: Sharma Tiffin Service" required />
+        </div>
+        <div class="form-group">
+          <label>Owner Name</label>
+          <input type="text" placeholder="Your full name" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 XXXXXXXXXX" required />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" placeholder="+91 XXXXXXXXXX" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Address / Area in Kota</label>
+        <input type="text" placeholder="Full address for your kitchen" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Food Type</label>
+          <select>
+            <option>Veg Only</option>
+            <option>Non-Veg Only</option>
+            <option>Both</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Starting Price (per day)</label>
+          <input type="number" placeholder="₹ per meal" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Delivery Areas</label>
+        <input type="text" placeholder="Eg: Talwandi, Vigyan Nagar, Mahaveer Nagar" />
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Register Kitchen →</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== FLOATING SUPPORT ===== -->
+<a href="https://wa.me/91XXXXXXXXXX" class="float-support" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script src="app.js"></script>
+</body>
+</html>
